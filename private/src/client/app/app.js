@@ -4,12 +4,14 @@ var jSSparkUi = angular.module('jsSparkUiApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
+    'ngAnimate',
     'btford.socket-io',
     'ui.router',
     'ui.bootstrap',
     'jQuery',
     '_',
-    'config'
+    'config',
+    'ui.codemirror'
 ])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
         $urlRouterProvider

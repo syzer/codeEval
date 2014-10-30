@@ -4,10 +4,10 @@
 angular.module('jsSparkUiApp')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('clients', {
-                url: '/clients',
-                templateUrl: 'app/clients/clients.html',
-                controller: 'ClientsCtrl',
+            .state('functional', {
+                url: '/functional',
+                templateUrl: 'app/functional/functional.html',
+                controller: 'FunctionalCtrl',
                 authenticate: true
             });
     })
@@ -16,3 +16,4 @@ angular.module('jsSparkUiApp')
             return input ? '\u2713' : '\u2718';
         };
     });
+

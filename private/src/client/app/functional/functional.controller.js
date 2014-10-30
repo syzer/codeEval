@@ -1,25 +1,25 @@
 'use strict';
 
-angular.module('jsSparkUiApp').controller('ClientsCtrl', function ($scope, $http, socket) {
-    $scope.message = 'Hello';
+angular.module('jsSparkUiApp')
+    .controller('FunctionalCtrl', function ($scope) {
+        $scope.jsCode = {};
 
-    $scope.clients = [];
+        $scope.editorOptions = {
+            lineWrapping: true,
+//            lineNumbers: true,
+//            readOnly: 'nocursor',
+            showCursorWhenSelecting: true,
+            tabSize: 4,
+            mode: "javascript"
+        };
 
-    $http.get('/api/clients').success(function (clients) {
-        $scope.clients = clients.map(function (client) {
-            if (!client.email) {
-                client.email = "unknown@example.com";
-            }
-            return client;
-        });
-        console.warn(clients);
-        socket.syncUpdates('client', $scope.clients);
+//        $(document).ready(function () {
+//            $("#flip").click(function () {
+//                $("#panel").slideUp("slow");
+//            });
+//        });
+        $scope.testMe = function() {
+            console.log($scope.jsCode);
+        }
     });
-
-    //TODO move to alert service
-    $scope.closeAlert = function(index) {
-        //$scope.alerts.splice(index, 1);
-        console.warn('closing', index);
-    };
-});
 

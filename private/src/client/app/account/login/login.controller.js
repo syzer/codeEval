@@ -21,7 +21,7 @@ angular.module('jsSparkUiApp')
                 })
                 .then(function () {
                     // Logged in, redirect to Search
-                    $location.path('/search/');
+                    $location.path('/functional');
                 })
                 .catch(function (err) {
                     $scope.errors.other = err.message;
