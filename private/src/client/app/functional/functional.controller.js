@@ -18,6 +18,16 @@ angular.module('jsSparkUiApp')
 //                $("#panel").slideUp("slow");
 //            });
 //        });
+
+        function sql() {
+            return "SELECT Book.title AS Title,\
+                COUNT(*) AS Authors\
+            FROM  Book\
+            JOIN  Book_author\
+            ON  Book.isbn = Book_author.isbn\
+            GROUP BY Book.title;";
+        };
+
         $scope.testMe = function() {
             console.log($scope.jsCode);
         }
