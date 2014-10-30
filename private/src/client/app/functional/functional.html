@@ -20,15 +20,19 @@
     </div>
     <!--todo big-font css-->
     <div id="slide2" class="big-font">
-        <h1 ng-click="testMe()">You have done Functional Programming when you did any of this:</h1>
+        <h3 ng-click="testMe()">You have done Functional Programming when you did any of this:</h3>
         <div class="big">
-            <textarea ui-codemirror ng-model="jsCode" ui-codemirror-opts="editorOptions">
+            <textarea ui-codemirror ng-model="jsCode" ui-codemirror-opts="jsOptions">
                 $(document).ready(function () {
                     $("#flip").click(function () {
                         $("#panel").slideUp("slow");
                     });
                 });
             </textarea>
+
+            <textarea ui-codemirror ng-model="sqlCode" ui-codemirror-opts="sqlOptions">
+            </textarea>
+
         </div>
     </div>
 
