@@ -16,14 +16,18 @@ angular.module('jsSparkUiApp')
             return input ? '\u2713' : '\u2718';
         };
     })
-    .factory('intro', function (_) {
-        var jsOptions = {
+    //TODO
+    .factory('editorOptions', function () {
+        return {
             lineWrapping: true,
             showCursorWhenSelecting: true,
             tabSize: 4,
             mode: "javascript",
             matchBrackets: true
-        };
+        }
+    })
+    .factory('intro', function (_, editorOptions) {
+        var jsOptions = editorOptions;
 
         var sqlOptions = _.clone(jsOptions);
         sqlOptions.mode = "text/x-mysql";
@@ -96,7 +100,12 @@ angular.module('jsSparkUiApp')
         }
 
     })
-    .factory('task1', function(){
-
+    .factory('task1', function (editorOptions) {
+        return {
+            task1: {
+                caption: "You have a overloaded method that takes 3 arguments, " +
+                "PM told you to add one more argument for special clients"
+            }
+        }
     });
 

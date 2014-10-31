@@ -23,42 +23,27 @@
     <div id="slide2" class="big-font">
         <h3>You have done Functional Programming when you did any of this:</h3>
 
-        <p>{{js.caption}}</p>
-        <textarea class="code-tab" ui-codemirror ng-model='js.code'
-                  ui-codemirror-opts='{{js.opts}}'>
+        <h3>{{js.caption}}</h3>
+        <textarea ui-codemirror ng-model='js.code' ui-codemirror-opts='{{js.opts}}'>
         </textarea>
 
-        <p>{{sql.caption}}</p>
+        <h3>{{sql.caption}}</h3>
         <textarea ui-codemirror ng-model='sql.code' ui-codemirror-opts='{{sql.opts}}'>
         </textarea>
 
-        <p>{{xml.caption}}</p>
+        <h3>{{xml.caption}}</h3>
         <textarea ui-codemirror ng-model='xml.code' ui-codemirror-opts='{{xml.opts}}'>
         </textarea>
 
-        <p>{{logo.caption}}</p>
+        <h3>{{logo.caption}}</h3>
         <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
         </textarea>
     </div>
 
     <div id="slide3" class="big-font">
         <h3>Task #1:</h3>
+        <h3>{{task1.caption}}</h3>
 
-        <p>{{task.caption}}</p>
-        <textarea ui-codemirror ng-model='js.code' ui-codemirror-opts='{{js.opts}}'>
-        </textarea>
-
-        <p>{{sql.caption}}</p>
-        <textarea ui-codemirror ng-model='sql.code' ui-codemirror-opts='{{sql.opts}}'>
-        </textarea>
-
-        <p>{{xml.caption}}</p>
-        <textarea ui-codemirror ng-model='xml.code' ui-codemirror-opts='{{xml.opts}}'>
-        </textarea>
-
-        <p>{{logo.caption}}</p>
-        <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
-        </textarea>
     </div>
 
 </div>
