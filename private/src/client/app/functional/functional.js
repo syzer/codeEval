@@ -100,11 +100,36 @@ angular.module('jsSparkUiApp')
         }
 
     })
-    .factory('task1', function (editorOptions) {
+    .factory('tasks', function (editorOptions) {
+        var code = "" + function makeSandwich(ifBacon, ifLattice, ifTomato) {
+            ifBacon = ifBacon ? 'Bacon': '';
+            ifLattice = ifLattice ? 'Lattice' : '';
+            ifTomato = ifTomato ? 'Tomato': '';
+
+            // ... 80 LOC switch case logic for preparation of lattice, bacon, tomato
+
+            return {
+                getFood: function() {
+                    return 'Here is a sandwich with: ' + ifBacon + ifLattice + ifTomato;
+                }
+            }
+        };
+
+        var expected = [
+            "makeSandwich()",
+            "    .addLattice()",
+            "    .addBacon()",
+            "    .addTomato()",
+            "    .getFood();"
+        ].join('\n');
+
         return {
             task1: {
                 caption: "You have a overloaded method that takes 3 arguments, " +
-                "PM told you to add one more argument for special clients"
+                "change it to Fluent API",
+                opts: editorOptions,
+                code: code,
+                expected: expected
             }
         }
     });
