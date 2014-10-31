@@ -19,21 +19,46 @@
         </ul>
     </div>
     <!--todo big-font css-->
+    <!--class="code-tab"-->
     <div id="slide2" class="big-font">
-        <h3 ng-click="testMe()">You have done Functional Programming when you did any of
-            this:</h3>
+        <h3>You have done Functional Programming when you did any of this:</h3>
 
-        <div class="big">
-            <p>Being alive after 2006</p>
-            <textarea class="code-tab" ui-codemirror ng-model="jsCode"
-                      ui-codemirror-opts="jsOptions">
-            </textarea>
+        <p>{{js.caption}}</p>
+        <textarea class="code-tab" ui-codemirror ng-model='js.code'
+                  ui-codemirror-opts='{{js.opts}}'>
+        </textarea>
 
-            <p>Used a DB:</p>
-            <textarea ui-codemirror ng-model="sqlCode" ui-codemirror-opts="sqlOptions">
-            </textarea>
+        <p>{{sql.caption}}</p>
+        <textarea ui-codemirror ng-model='sql.code' ui-codemirror-opts='{{sql.opts}}'>
+        </textarea>
 
-        </div>
+        <p>{{xml.caption}}</p>
+        <textarea ui-codemirror ng-model='xml.code' ui-codemirror-opts='{{xml.opts}}'>
+        </textarea>
+
+        <p>{{logo.caption}}</p>
+        <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="slide3" class="big-font">
+        <h3>Task #1:</h3>
+
+        <p>{{task.caption}}</p>
+        <textarea ui-codemirror ng-model='js.code' ui-codemirror-opts='{{js.opts}}'>
+        </textarea>
+
+        <p>{{sql.caption}}</p>
+        <textarea ui-codemirror ng-model='sql.code' ui-codemirror-opts='{{sql.opts}}'>
+        </textarea>
+
+        <p>{{xml.caption}}</p>
+        <textarea ui-codemirror ng-model='xml.code' ui-codemirror-opts='{{xml.opts}}'>
+        </textarea>
+
+        <p>{{logo.caption}}</p>
+        <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
+        </textarea>
     </div>
 
 </div>
