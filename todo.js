@@ -61,33 +61,6 @@ console.log(makeSandwich(true, false).getFood());
 //Here is a sandwich with: Bacon,,
 
 
-function makeSandwich() {
-    var preparedFood = 'Here is a sandwich with: ';
 
-    return {
-        addLattice: function() {
-            // Lattice logic here
-            preparedFood += 'Lattice';
-            return this;
-        },
-        addBacon: function() {
-            preparedFood += 'Bacon';
-            return this;
-        },
-        addTomato: function() {
-            preparedFood += 'Tomato';
-            return this;
-        },
-        getFood: function() {
-            return preparedFood;
-        }
-    }
-}
-
-makeSandwich()
-    .addLattice()
-    .addBacon()
-    .addTomato()
-    .getFood();
 
 

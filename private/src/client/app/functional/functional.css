@@ -1,6 +1,6 @@
-.code-tab {
-    height: 100px!important;
-}
 .CodeMirror {
-    height: 200px;
+    /*height: 200px;*/
+    margin-top: 50px;
+    height: 80%!important;
+    font-size: 22px!important;
 }

@@ -17,6 +17,11 @@ angular.module('jsSparkUiApp')
         };
     })
     //TODO
+    .factory('add2Tabs', function() {
+        return function(el) {
+                return '        ' + el;
+        }
+    })
     .factory('editorOptions', function () {
         return {
             lineWrapping: true,
@@ -26,7 +31,7 @@ angular.module('jsSparkUiApp')
             matchBrackets: true
         }
     })
-    .factory('intro', function (_, editorOptions) {
+    .factory('intro', function (_, editorOptions, add2Tabs) {
         var jsOptions = editorOptions;
 
         var sqlOptions = _.clone(jsOptions);
@@ -44,7 +49,7 @@ angular.module('jsSparkUiApp')
             "        $('#panel').slideUp('slow');",
             "    });",
             "});"
-        ].join('\n');
+        ].map(add2Tabs).join('\n');
 
         var sqlCode = [
             "SELECT Book.title AS Title,",
@@ -53,7 +58,7 @@ angular.module('jsSparkUiApp')
             "JOIN  Book_author",
             "ON  Book.isbn = Book_author.isbn",
             "GROUP BY Book.title;"
-        ].join('\n');
+        ].map(add2Tabs).join('\n');
 
         var xmlCode = [
             "<note>",
@@ -62,7 +67,7 @@ angular.module('jsSparkUiApp')
             "	<heading>Reminder</heading>",
             "	<body>Dont forget me this weekend!</body>",
             "</note>"
-        ].join('\n');
+        ].map(add2Tabs).join('\n');
 
         var logoCode = [
             "#logo",
@@ -74,7 +79,7 @@ angular.module('jsSparkUiApp')
             "",
             "print reverse [apples and pears]",
             "pears and apples"
-        ].join('\n');
+        ].map(add2Tabs).join('\n');
 
         return {
             js: {
@@ -100,19 +105,20 @@ angular.module('jsSparkUiApp')
         }
 
     })
-    .factory('tasks', function (editorOptions) {
-        var code = "" + function makeSandwich(ifBacon, ifLattice, ifTomato) {
-            ifBacon = ifBacon ? 'Bacon': '';
-            ifLattice = ifLattice ? 'Lattice' : '';
-            ifTomato = ifTomato ? 'Tomato': '';
+    .factory('tasks', function (editorOptions, add2Tabs) {
+        var code = function makeSandwich(ifBacon, ifLattice, ifTomato) {
+        ifBacon = ifBacon ? 'Bacon' : '';
+        ifLattice = ifLattice ? 'Lattice' : '';
+        ifTomato = ifTomato ? 'Tomato' : '';
 
-            // ... 80 LOC switch case logic for preparation of lattice, bacon, tomato
+    // ... 80 LOC switch case logic of lattice, bacon, tomato
 
-            return {
-                getFood: function() {
-                    return 'Here is a sandwich with: ' + ifBacon + ifLattice + ifTomato;
+           return {
+                getFood: function () {
+                    return 'Here is a sandwich with: '
+                        + ifBacon + ifLattice + ifTomato;
                 }
-            }
+           }
         };
 
         var expected = [
@@ -121,7 +127,34 @@ angular.module('jsSparkUiApp')
             "    .addBacon()",
             "    .addTomato()",
             "    .getFood();"
-        ].join('\n');
+        ].map(add2Tabs).join('\n');
+
+        var code2generator = [
+            'nextNum();          //=> 1',
+            'nextNum();          //=> 2',
+            'nextNum();          //=> 3',
+            'nextNum();          //=> 4'
+        ].map(add2Tabs).join('\n');
+
+        var articles = [
+            {
+                title: 'Why OO Sucks by Joe Armstrong',
+                url: 'http://www.bluetail.com/~joe/vol1/v1_oo.html',
+                author: {
+                    name: 'Joe Armstrong',
+                    email: 'empty@email.com'
+                }
+            },
+            {
+                title: 'Functional JavaScript',
+                url: 'http://shop.oreilly.com/product/0636920028857.do',
+                author: {
+                    name: 'Michael Fogus',
+                    email: 'empty2@email.com'
+                }
+            }
+        ];
+        articles = JSON.stringify(articles, null, 2);
 
         return {
             task1: {
@@ -130,6 +163,14 @@ angular.module('jsSparkUiApp')
                 opts: editorOptions,
                 code: code,
                 expected: expected
+            },
+            task2: {
+                caption: "Make a function that behaves like",
+                opts: editorOptions,
+                code: code2generator
+            },
+            articles: {
+                code: articles
             }
         }
     });

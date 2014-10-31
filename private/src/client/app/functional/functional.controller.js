@@ -8,6 +8,8 @@ angular.module('jsSparkUiApp')
         $scope.xml = intro.xml;
         $scope.logo = intro.logo;
         $scope.task1 = tasks.task1;
+        $scope.task2 = tasks.task2;
+        $scope.articles = tasks.articles;
 
     });
 

@@ -1,7 +1,10 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+<!--<script>impress().init();</script>-->
 
-<div class="container">
-    <div id="slide1">
+<!--class="container"-->
+<div  id="impress">
+    <div id="slide1" class="step slide" >
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h1 class="panel-title">Lets start from short history of JS:</h1>
@@ -20,50 +23,214 @@
     </div>
     <!--todo big-font css-->
     <!--class="code-tab"-->
-    <div id="slide2" class="big-font">
-        <h3>You have done Functional Programming when you did any of this:</h3>
-
+    <div id="slide2" class="big-font step slide">
+        <h1>You have done Functional Programming when you did any of this:</h1>
         <h3>{{js.caption}}</h3>
         <textarea ui-codemirror ng-model='js.code' ui-codemirror-opts='{{js.opts}}'>
         </textarea>
-
+    </div>
+    <div id="slide2-2" class="big-font step slide">
         <h3>{{sql.caption}}</h3>
         <textarea ui-codemirror ng-model='sql.code' ui-codemirror-opts='{{sql.opts}}'>
         </textarea>
-
+    </div>
+    <div id="slide2-3" class="big-font step slide">
         <h3>{{xml.caption}}</h3>
         <textarea ui-codemirror ng-model='xml.code' ui-codemirror-opts='{{xml.opts}}'>
         </textarea>
-
+    </div>
+    <div id="slide2-4" class="big-font step slide">
         <h3>{{logo.caption}}</h3>
         <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
         </textarea>
     </div>
 
-    <div id="slide3" class="big-font">
+    <div id="imperative-functional" class="big-font step slide">
+        <h3>Imperative style vs Functional</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{js.opts}}'>
+            _.times(taskConfig.times, function(n) {
+                deferred = defer();
+                dispatcher.addTask(task, deferred);
+                todos.push(deferred.promise);
+            });
+
+            // vs
+
+            for (i = 1; i <= taskConfig.times; i++) {
+                deferred = defer();
+                dispatcher.addTask(task, deferred);
+                todos.push(deferred.promise);
+            }
+
+        </textarea>
+    </div>
+
+    <div id="slide3" class="big-font step slide">
         <h1>JS 101:</h1>
-        <h3>Task #1:</h3>
+        <h3>Task #1: Fluid API</h3>
         <h3>{{task1.caption}}</h3>
         <form>
             <textarea ui-codemirror ng-model='task1.code' ui-codemirror-opts='{{task1.opts}}'>
             </textarea>
         </form>
+    </div>
 
+    <div id="slide3-1" class="big-font step slide">
+        <h1>Fluid API</h1>
         <textarea ui-codemirror ng-model='task1.expected' ui-codemirror-opts='{{task1.opts}}'>
         </textarea>
     </div>
 
-    <div id="slide4" class="big-font">
-        <h1>JS 101:</h1>
-        <h3>Task #1:</h3>
-        <h3>{{task1.caption}}</h3>
-        <form>
-            <textarea ui-codemirror ng-model='task1.' ui-codemirror-opts='{{task1.opts}}'>
-            </textarea>
-        </form>
+    <div id="slide4" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #1:Response</h3>
+    </div>
 
-        <textarea ui-codemirror ng-model='task1.expected' ui-codemirror-opts='{{task1.opts}}'>
+    <div id="slide5" class="step slide">
+        <h1>Monads for dynamic type safety</h1>
+        <textarea ui-codemirror  ui-codemirror-opts='{{task1.opts}}'>
+            // monads for dynamic type safety
+            exports.index = function (req, res) {
+                // here db call to get users
+                var users = [
+                    {id: 1},
+                    {id: 2, email: 'some@that.loggedin.com'}
+                ];
+
+                res.status(200, users);
+            };
         </textarea>
+    </div>
+    <div id="slide5-2" class="step slide">
+        <h1>Monads for dynamic type safety, cd.</h1>
+        <textarea ui-codemirror  ui-codemirror-opts='{{task1.opts}}'>
+            exports.index = function (req, res) {
+                // here db call to get users
+                var users = [
+                    {id: 1},
+                    {id: 2, email: 'some@that.loggedin.com'}
+                ];
+
+                res.status(200).json(users);
+            };
+
+        </textarea>
+    </div>
+
+    <div id="slide6" class="step slide">
+        <h1>JS 101:</h1>
+        <h3>Task #2: Generators</h3>
+        <h3>{{task2.caption}}</h3>
+        <textarea class="test" ui-codemirror ng-model='task2.code' ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="slide6-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #2:Response</h3>
+    </div>
+
+
+    <div id="curry" class="step slide">
+        <h1>Task #3:</h1>
+        <h3>Make function adder:</h3>
+        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            adder(1)(2); //=> 3
+            adder(2)(2); //=> 4
+        </textarea>
+    </div>
+
+    <div id="curry-2" class="step slide">
+        <h1>TODO</h1>
+        <h1>Currying()</h1>
+        <h3><a href="http://en.wikipedia.org/wiki/Haskell_Curry" target="blank">
+            Haskell Curry</a>
+        </h3>
+        <h3>Task #3:Response</h3>
+    </div>
+
+
+    <div id="map" class="step slide">
+        <h1>Task #4:</h1>
+        <h3>Use map function to transform data-structure</h3>
+
+        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var isTheArea = [
+                'Urban',
+                'Peri-urban',
+                'Rural',
+                'NS'
+            ];
+
+            var isTheArea2 = [
+                { name: 'Urban' },
+                { name: 'Peri-urban' },
+                { name: 'Rural' },
+                { name: 'NS' }
+            ];
+        </textarea>
+    </div>
+
+    <div id="map-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #4:Response</h3>
+    </div>
+
+    <div id="map-articles" class="step slide">
+        <h1>Function composition</h1>
+        <h1>Task #compose-map:</h1>
+        <h3>Return <b>firstTitle()</b> using map</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var articles = [
+            {
+                title: 'Why OO Sucks by Joe Armstrong',
+                url: 'http://www.bluetail.com/~joe/vol1/v1_oo.html',
+                author: {
+                    name: 'Joe Armstrong',
+                    email: 'empty@email.com'
+                }
+            },
+            {
+                title: 'Functional JavaScript',
+                url: 'http://shop.oreilly.com/product/0636920028857.do',
+                author: {
+                    name: 'Michael Fogus',
+                    email: 'empty2@email.com'
+                }
+            }
+            ];
+        </textarea>
+    </div>
+
+    <div id="map-articles-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #compose-map:Response</h3>
+    </div>
+
+    <div id="reduce-articles" class="step slide">
+        <h1>Function composition</h1>
+        <h1>Task #compose-reduce:</h1>
+        <h3>Return <b>firstTitle()</b> using<b> reduce</b></h3>
+        <textarea ng-model="articles.code" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="reduce-articles-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #compose-reduce:Response</h3>
+    </div>
+
+    <div id="compose-articles" class="step slide">
+        <h1>Function composition</h1>
+        <h1>Task #compose-compose:</h1>
+        <h3>Return <b>firstTitle()</b> using<b> _.compose, _.curry, _.first, _.pluck</b></h3>
+        <textarea ng-model="articles.code" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="compose-articles-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #compose-compose:Response</h3>
     </div>
 
 </div>
