@@ -126,7 +126,7 @@ console.log(firstTitle2(articles));
 // a given person wrote any of the articles.
 // "Uncompose" the function below by rewrite it
 // without _.compose to make it more natural.
-//TODO as exercise
+//TODO write it as exercise
 var names = _.compose(rPluck('name'), rPluck('author'));
 console.log(names(articles));
 
@@ -134,11 +134,41 @@ console.log(names(articles));
 //var containsNames = _.compose(_.contains, names);
 
 var containsNames = _.curry(function (x, xs) {
-    return _.contains(names(x), xs);        //_.compose(
+    return _.contains(names(x), xs);
 });
 console.log(containsNames(articles)('Michael Fogus'));
+
 
 //var isAuthor = _.curry(function (x, xs) {
 //    return _.compose(_.contains(x), names)(xs);
 //});
 //console.log(isAuthor(articles)('Michael Fogus'));
+
+
+// As you can see, the fork function is a
+// pipeline like compose, except it duplicates
+// its value, sends it to two functions, then
+// sends the results to a combining function.
+//
+var sum = function (a, b) {
+    console.log(a,b);
+    return a + b;
+};
+
+var cSum = _.curry(sum);
+var divide = function (a, b) {
+    console.log(a,b);
+    return a / b;
+};
+var cDivide = _.curry(divide);
+
+_.mixin({sum: cSum, divide: cDivide});
+
+var fork = _.curry(function (lastly, f, g, x) {
+    return lastly(f(x), g(x));
+});
+var avg = fork(_.divide, _.sum, _.size); //TODO size sum divide
+//var avg = undefined; // change this
+//assertEqual(3, avg([1,2,3,4,5]));
+console.log(avg([1, 2, 3, 4, 5]));
+console.log("--------Exercise 4 pass!--------");
