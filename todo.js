@@ -61,7 +61,7 @@ console.log(makeSandwich(true, false).getFood());
 //Here is a sandwich with: Bacon,,
 
 
-function makeSandwich2() {
+function makeSandwich() {
     var preparedFood = 'Here is a sandwich with: ';
 
     return {

@@ -53,6 +53,19 @@
         </textarea>
     </div>
 
+    <div id="slide4" class="big-font">
+        <h1>JS 101:</h1>
+        <h3>Task #1:</h3>
+        <h3>{{task1.caption}}</h3>
+        <form>
+            <textarea ui-codemirror ng-model='task1.' ui-codemirror-opts='{{task1.opts}}'>
+            </textarea>
+        </form>
+
+        <textarea ui-codemirror ng-model='task1.expected' ui-codemirror-opts='{{task1.opts}}'>
+        </textarea>
+    </div>
+
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
