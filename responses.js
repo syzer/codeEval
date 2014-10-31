@@ -130,14 +130,13 @@ console.log(firstTitle2(articles));
 var names = _.compose(rPluck('name'), rPluck('author'));
 console.log(names(articles));
 
-var containsNames = _.contains(names(articles), 'Michael Fogus');
-var containsNames = _.compose(_.contains, names);
+//var containsNames = _.contains(names(articles), 'Michael Fogus');
+//var containsNames = _.compose(_.contains, names);
 
-var containsNames = _.curry(function (xs, x) {
-    console.log('x:', x,  'xs',xs);
-    return _.compose(_.contains(x), names)(xs);
+var containsNames = _.curry(function (x, xs) {
+    return _.contains(names(x), xs);        //_.compose(
 });
-console.log(containsNames(articles)('Michael Fogus'))
+console.log(containsNames(articles)('Michael Fogus'));
 
 //var isAuthor = _.curry(function (x, xs) {
 //    return _.compose(_.contains(x), names)(xs);
