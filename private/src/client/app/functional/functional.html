@@ -347,7 +347,6 @@
     </div>
 
     <div id="compose-articles" class="step slide">
-        <h1>Function composition</h1>
         <h1>Task #compose-compose:</h1>
         <h3>Return <b>firstTitle()</b> using<b> _.compose, _.curry, _.first, _.pluck</b></h3>
         <textarea ng-model="articles.code" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
@@ -359,6 +358,19 @@
         <h3>Task #compose-compose:Response</h3>
     </div>
 
+    <div id="articles-is-author" class="step slide">
+        <h1>Task #articles-is-author:Response</h1>
+        <h3>Make function isAuthor() using: <b>_.compose, _.pluck, _.curry</b></h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        isAuthor(articles)('Michael Fogus');   //=> true
+        isAuthor(articles)('Lukas');           //=> false
+        </textarea>
+    </div>
+
+    <div id="articles-is-author-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #articles-is-author:Response</h3>
+    </div>
 
     <div id="before-decorator" class="step slide">
         <h1>vs AOP</h1>
@@ -427,6 +439,30 @@
         </ul>
     </div>
 
+    <div id="after-decorator" class="step slide">
+        <h1>Task #after-decorator</h1>
+        <h3>Make after decorator</h3>
+        <h3>TODO </h3>
+    </div>
+
+    <div id="after-decorator-with-log" class="step slide">
+        <h1>Decorate function double with login and make doubleWithLog()</h1>
+        <h3>Task #after-decorator-with-logging</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var double = function (n) {
+                return n * 2;
+            };
+        </textarea>
+    </div>
+
+    <div id="after-decorator-with-log-2" class="step slide">
+        <h1>Decorate function double with login and make doubleWithLog()</h1>
+        <h3>Task #after-decorator-with-logging</h3>
+        <h3>TODO Response </h3>
+        <textarea ng-model="tasks.after-decorator-with-logging" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
     <div id="curry-task-summary" class="step slide">
         <h1>Task #curry-task-summary:</h1>
         <textarea ng-model="incompleteTaskSummary.serverTasks" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
@@ -445,9 +481,61 @@
         </textarea>
     </div>
 
+    <div id="curry-task-summary-4" class="step slide">
+        <h1>Task #curry-task-summary:</h1>
+        <h3>TODO RESPONSE</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
     <!--TODO finish slides for task sumarry-->
 
-    <div id="bonus-round" class="step slide">
+
+    <div id="bonus-round-0" class="step slide">
+        <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
+        var getIncompleteTaskSummaries = function(memberName) {
+            return fetchData()
+                .then(function(data) {
+                    return R.get('tasks', data)
+                })
+                .then(function(tasks) {
+                    return R.filter(function(task) {
+                        return R.propEq('username', memberName, task)
+                    }, tasks)
+                })
+                .then(function(tasks) {
+                    return R.reject(function(task) {
+                        return R.propEq('complete', true, task);
+                    }, tasks)
+                })
+                .then(function(tasks) {
+                    return R.map(function(task) {
+                        return R.pick(['id', 'dueDate', 'title', 'priority'], task);
+                    }, tasks);
+                })
+                .then(function(abbreviatedTasks) {
+                    return R.sortBy(function(abbrTask) {
+                        return R.get('dueDate', abbrTask);
+                    }, abbreviatedTasks);
+                });
+        };
+        </textarea>
+    </div>
+
+    <div id="bonus-round-1" class="step slide">
+        <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
+        var getIncompleteTaskSummaries = function (memberName) {
+            return fetchData()
+                .then(R.get('tasks'))
+                .then(R.filter(R.propEq('username', memberName)))
+                .then(R.reject(R.propEq('complete', true)))
+                .then(R.map(R.pick(['id', 'dueDate', 'title', 'priority'])))
+                .then(R.sortBy(R.get('dueDate')));
+        };
+        </textarea>
+    </div>
+
+    <div id="bonus-round-2" class="step slide">
         <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
  getIncompleteTaskSummaries = (memberName) ->
    fetchData()

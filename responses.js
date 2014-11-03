@@ -103,7 +103,23 @@ function addNameProp(el) {
 }
 
 
-//TODO composeVsChain
+//#flip
+function flip(fn) {
+    return function flipped(a, b) {
+        return fn.call(this, b, a);
+    }
+}
+function fromTo(a, b) {
+    return "from: " + a + " to: " + b;
+}
+
+//#flip-fromTo
+var returnTrip = flip(fromTo);
+fromTo('Basel', 'Zurich');             //=> from: Basel to: Zurich
+returnTrip('Basel', 'Zurich');          //=> from: Zurich to: Basel
+
+
+
 
 // task #function composiotion
 var articles = [
@@ -124,22 +140,6 @@ var articles = [
         }
     }
 ];
-
-//#flip
-function flip(fn) {
-    return function flipped(a, b) {
-        return fn.call(this, b, a);
-    }
-}
-function fromTo(a, b) {
-    return "from: " + a + " to: " + b;
-}
-
-//#flip-fromTo
-var returnTrip = flip(fromTo);
-fromTo('Basel', 'Zurich');             //=> from: Basel to: Zurich
-returnTrip('Basel', 'Zurich');          //=> from: Zurich to: Basel
-
 
 // #map-compose
 var firstTitle = function (iterable) {
@@ -182,21 +182,15 @@ console.log(firstTitle(articles));
 // using only _.get, _.compose, and _.map.
 
 
-//isAuthor uses the names function above to see if
-// a given person wrote any of the articles.
-// "Uncompose" the function below by rewrite it
-// without _.compose to make it more natural.
-//TODO write it as exercise
-var names = _.compose(rPluck('name'), rPluck('author'));
-console.log(names(articles));
+var authorsNames = _.compose(rPluck('name'), rPluck('author'));
+console.log(authorsNames(articles));
 
-var containsNames = _.curry(function (x, xs) {
-    return _.contains(names(x), xs);
+var isAuthor = _.curry(function (x, xs) {
+    return _.contains(authorsNames(x), xs);
 });
-console.log(containsNames(articles)('Michael Fogus'));
 
-
-//TODO functional curry.js get ramda and funtional
+console.log(isAuthor(articles)('Michael Fogus'));   //=> true
+console.log(isAuthor(articles)('Lukas'));           //=> false
 
 
 //var isAuthor = _.curry(function (x, xs) {
@@ -206,7 +200,7 @@ console.log(containsNames(articles)('Michael Fogus'));
 
 
 console.log("--------AVG--------");
-
+// TODO AVG not working!!
 // As you can see, the fork function is a
 // pipeline like compose, except it duplicates
 // its value, sends it to two functions, then
@@ -232,9 +226,9 @@ var fork = _.curry(function (lastly, f, g, x) {
 var avg = fork(_.divide, _.sum, _.size); //TODO size sum divide
 //var avg = undefined; // change this
 //assertEqual(3, avg([1,2,3,4,5]));
-console.log(avg([1, 2, 3, 4, 5]));
-
-console.log('size:', _.size([1, 2, 3, 4]));
+//console.log(avg([1, 2, 3, 4, 5]));
+//
+//console.log('size:', _.size([1, 2, 3, 4]));
 
 console.log("--------AVG PASS--------");
 
@@ -270,7 +264,121 @@ var lessStupid = {
 };
 
 var evenLessStupid = {
-    remove : isAdminFirst(fluent(function() {
+    remove: isAdminFirst(fluent(function () {
         // destroy code
     }))
+};
+
+// curry unary combinators
+function curry(fn) {
+    return function curried(a, optionalB) {
+        if (arguments.length > 1) {
+            return fn.call(this, a, optionalB);
+        } else {
+            return function partiallyApplied(b) {
+                return fn.call(this, a, b);
+            }
+        }
+    }
+}
+
+// #after-decorator
+var after = curry(
+    function decorate(decoration, method) {
+        return function decoratedWithAfter() {
+            var returnValue = method.apply(this, arguments);
+            decoration.apply(this, arguments);
+            return returnValue;
+        };
+    }
+);
+
+
+var double = function (n) {
+    return n * 2;
+};
+
+//#after-decorator-with-logging
+var doubleWithLog = after(console.log, double);
+console.log(doubleWithLog(2)); //=>4 (console log first arguments)
+
+
+var data = {
+    result: 'SUCCESS',
+    interfaceVersion: '1.0.3',
+    requested: '10/17/2013 15:31:20',
+    lastUpdated: '10/16/2013 10:52:39',
+    tasks: [
+        {id: 104, complete: false, priority: 'high',
+            dueDate: '2013-11-29', username: 'Scott',
+            title: 'Do something', created: '9/22/2013'},
+        {id: 105, complete: false, priority: 'medium',
+            dueDate: '2013-11-22', username: 'Lena',
+            title: 'Do something else', created: '9/22/2013'},
+        {id: 107, complete: true, priority: 'high',
+            dueDate: '2013-11-22', username: 'Mike',
+            title: 'Fix the foo', created: '9/22/2013'},
+        {id: 108, complete: false, priority: 'low',
+            dueDate: '2013-11-15', username: 'Punam',
+            title: 'Adjust the bar', created: '9/25/2013'},
+        {id: 110, complete: false, priority: 'medium',
+            dueDate: '2013-11-15', username: 'Scott',
+            title: 'Rename everything', created: '10/2/2013'},
+        {id: 112, complete: true, priority: 'high',
+            dueDate: '2013-11-27', username: 'Lena',
+            title: 'Alter all quuxes', created: '10/5/2013'}
+        // , ...
+    ]
+};
+
+var fetchData = function () {
+    var deffered = Q.defer();
+    setTimeout(function () {
+        deffered.resolve(data);
+    }, 1000);
+    return deffered.promise;
+};
+
+
+//#curry-task-summary
+var getIncompleteTaskSummaries = function (memberName) {
+    return fetchData()
+        .then(function (data) {
+            return data.tasks;
+        })
+        .then(function (tasks) {
+            var results = [];
+            for (var i = 0, len = tasks.length; i < len; i++) {
+                if (tasks[i].username == memberName) {
+                    results.push(tasks[i]);
+                }
+            }
+            return results;
+        })
+        .then(function (tasks) {
+            var results = [];
+            for (var i = 0, len = tasks.length; i < len; i++) {
+                if (!tasks[i].complete) {
+                    results.push(tasks[i]);
+                }
+            }
+            return results;
+        })
+        .then(function (tasks) {
+            return tasks.map(function (task) {
+                return {
+                    id: task.id,
+                    priority: task.priority,
+                    dueDate: task.dueDate,
+                    title: task.title
+                }
+            });
+        })
+        .then(function (tasks) {
+            tasks.sort(function (first, second) {
+                var a = first.dueDate, b = second.dueDate;
+                return a < b ? -1 : a > b ? 1 : 0;
+            });
+            return tasks;
+        });
 };
