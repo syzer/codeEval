@@ -17,9 +17,9 @@ angular.module('jsSparkUiApp')
         };
     })
     //TODO
-    .factory('add2Tabs', function() {
-        return function(el) {
-                return '        ' + el;
+    .factory('add2Tabs', function () {
+        return function (el) {
+            return '        ' + el;
         }
     })
     .factory('editorOptions', function () {
@@ -107,18 +107,18 @@ angular.module('jsSparkUiApp')
     })
     .factory('tasks', function (editorOptions, add2Tabs) {
         var code = function makeSandwich(ifBacon, ifLattice, ifTomato) {
-        ifBacon = ifBacon ? 'Bacon' : '';
-        ifLattice = ifLattice ? 'Lattice' : '';
-        ifTomato = ifTomato ? 'Tomato' : '';
+            ifBacon = ifBacon ? 'Bacon' : '';
+            ifLattice = ifLattice ? 'Lattice' : '';
+            ifTomato = ifTomato ? 'Tomato' : '';
 
-    // ... 80 LOC switch case logic of lattice, bacon, tomato
+            // ... 80 LOC switch case logic of lattice, bacon, tomato
 
-           return {
+            return {
                 getFood: function () {
                     return 'Here is a sandwich with: '
                         + ifBacon + ifLattice + ifTomato;
                 }
-           }
+            }
         };
 
         var expected = [
@@ -156,6 +156,73 @@ angular.module('jsSparkUiApp')
         ];
         articles = JSON.stringify(articles, null, 2);
 
+        var serverTasks = {
+            result: 'SUCCESS',
+            interfaceVersion: '1.0.3',
+            requested: '10/17/2013 15:31:20',
+            lastUpdated: '10/16/2013 10:52:39',
+            tasks: [
+                {
+                    id: 104, complete: false, priority: 'high',
+                    dueDate: '2013-11-29', username: 'Scott',
+                    title: 'Do something', created: '9/22/2013'
+                },
+                {
+                    id: 105, complete: false, priority: 'medium',
+                    dueDate: '2013-11-22', username: 'Lena',
+                    title: 'Do something else', created: '9/22/2013'
+                },
+                {
+                    id: 107, complete: true, priority: 'high',
+                    dueDate: '2013-11-22', username: 'Mike',
+                    title: 'Fix the foo', created: '9/22/2013'
+                },
+                {
+                    id: 108, complete: false, priority: 'low',
+                    dueDate: '2013-11-15', username: 'Punam',
+                    title: 'Adjust the bar', created: '9/25/2013'
+                },
+                {
+                    id: 110, complete: false, priority: 'medium',
+                    dueDate: '2013-11-15', username: 'Scott',
+                    title: 'Rename everything', created: '10/2/2013'
+                },
+                {
+                    id: 112, complete: true, priority: 'high',
+                    dueDate: '2013-11-27', username: 'Lena',
+                    title: 'Alter all quuxes', created: '10/5/2013'
+                }
+                // , ...
+            ]
+        };
+        serverTasks = JSON.stringify(serverTasks, null, 2);
+
+        var fetchData = function () {
+            var deffered = Q.defer();
+            setTimeout(function () {
+                deffered.resolve(data);
+            }, 1000);
+            return deffered.promise;
+        };
+
+        fetchData = String(fetchData);
+
+        var expectedTasksSummary = [
+            {
+                id: 110,
+                priority: 'medium',
+                dueDate: '2013-11-15',
+                title: 'Rename everything'
+            },
+            {
+                id: 104,
+                priority: 'high',
+                dueDate: '2013-11-29',
+                title: 'Do something'
+            }
+        ];
+        expectedTasksSummary =  JSON.stringify(expectedTasksSummary, null, 2);
+
         return {
             task1: {
                 caption: "You have a overloaded method that takes 3 arguments, " +
@@ -171,6 +238,15 @@ angular.module('jsSparkUiApp')
             },
             articles: {
                 code: articles
+            },
+            incompleteTaskSummary: {
+                serverTasks: serverTasks,
+                fetchData: fetchData,
+                expectedTaskSummary: expectedTasksSummary,
+                opts: editorOptions
+            },
+            coffee: {
+                opts: 'text/x-coffeescript'
             }
         }
     });

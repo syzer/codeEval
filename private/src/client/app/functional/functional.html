@@ -44,6 +44,14 @@
         <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
         </textarea>
     </div>
+    <div id="slide2-5" class="big-font step slide">
+        <h1>Reference transparency</h1>
+        <h1>Function as first class citizen</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{js.opts}}'>
+            var print = console.log;
+        </textarea>
+    </div>
+
 
     <div id="imperative-functional" class="big-font step slide">
         <h3>Imperative style vs Functional</h3>
@@ -64,6 +72,29 @@
 
         </textarea>
     </div>
+
+    <div id="basic-rule-set" class="step slide">
+        <ul>
+            <li>
+                <h1><b>Associativity</b></h1>
+                <p>For all a, b and c in S, the equation holds:</p>
+                <b>(a • b) • c = a • (b • c)</b>
+            </li>
+
+            <li>
+                <h1><b>Identity element</b></h1>
+                <p>There exists an element e in S such that for every element a in S, the equations holds:</p>
+                <strong>e • a = a • e = a</strong>
+                <!--monoid-->
+            </li>
+            <li>
+                <h1><b>Idempotence</b></h1>
+                <h3>Unary operation</h3>
+                <p><strong>(a • a) = a</strong></p>
+            </li>
+        </ul>
+    </div>
+
 
     <div id="slide3" class="big-font step slide">
         <h1>JS 101:</h1>
@@ -86,7 +117,44 @@
         <h3>Task #1:Response</h3>
     </div>
 
-    <div id="slide5" class="step slide">
+    <div id="fluid-sandwich" class="big-font step slide">
+        <h3>Task #fluid-sandwich: makeFluidSandwich()</h3>
+        <h3>so that its easy to see its fluent</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task1.opts}}'>
+            function fluent(methodBody) {
+                return function fluentized() {
+                    methodBody.apply(this, arguments);
+                    return this;
+                }
+            }
+        </textarea>
+    </div>
+
+    <div id="fluid-sandwich-2" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #fluid-sandwich:Response</h3>
+    </div>
+
+    <div id="vs-oop" class="step slide">
+        <h1>vs OOP</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task1.opts}}'>
+    // Convenient proxy factory bean superclass for
+    // proxy factory beans that create only singletons.
+    // AKA Spring Hell
+
+    var proxyFactoryBeanSingleton = proxy(factory(bean(
+            singleton(/*args*/))
+        )
+
+    // or
+    var proxyFactoryBeanSingleton = _.composeRight(
+                proxy, factory, bean, singleton
+            );
+        </textarea>
+    </div>
+
+
+    <div id="monads" class="step slide">
         <h1>Monads for dynamic type safety</h1>
         <textarea ui-codemirror  ui-codemirror-opts='{{task1.opts}}'>
             // monads for dynamic type safety
@@ -101,7 +169,7 @@
             };
         </textarea>
     </div>
-    <div id="slide5-2" class="step slide">
+    <div id="monads-2" class="step slide">
         <h1>Monads for dynamic type safety, cd.</h1>
         <textarea ui-codemirror  ui-codemirror-opts='{{task1.opts}}'>
             exports.index = function (req, res) {
@@ -113,12 +181,10 @@
 
                 res.status(200).json(users);
             };
-
         </textarea>
     </div>
 
     <div id="slide6" class="step slide">
-        <h1>JS 101:</h1>
         <h3>Task #2: Generators</h3>
         <h3>{{task2.caption}}</h3>
         <textarea class="test" ui-codemirror ng-model='task2.code' ui-codemirror-opts='{{task2.opts}}'>
@@ -176,6 +242,66 @@
         <h3>Task #4:Response</h3>
     </div>
 
+
+    <div id="flip" class="step slide">
+        <h1>Decorator flip:</h1>
+        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            function flip(fn) {
+                return function flipped(a, b) {
+                    return fn.call(this, b, a);
+                }
+            }
+        </textarea>
+    </div>
+
+    <div id="flip-from-to" class="step slide">
+        <h1>Decorator flip:</h1>
+        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            function fromTo(a, b) {
+                return "from: " + a + "to: " + b;
+            }
+        </textarea>
+    </div>
+
+    <div id="flip-task" class="step slide">
+        <h1>Task #flip-fromTo: make returnTrip()</h1>
+        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            //=> from: Basel to: Zurich
+            fromTo('Basel', 'Zurich');
+
+            //=> from: Zurich to: Basel
+            returnTrip("Basel", "Zurich");
+        </textarea>
+    </div>
+
+    <div id="flip-response" class="step slide">
+        <h1>TODO</h1>
+        <h3>Task #flip-fromTo:Response</h3>
+    </div>
+
+    <div id="curry-combinator" class="step slide">
+        <h1>Example unary combinator: curry</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        function curry(fn) {
+            return function curried(a, optionalB) {
+                if (arguments.length > 1) {
+                    return fn.call(this, a, optionalB);
+                } else {
+                    return function partiallyApplied(b) {
+                        return fn.call(this, a, b);
+                    }
+                }
+            }
+        }
+        </textarea>
+    </div>
+
+    <div id="curry-combinator-adder" class="step slide">
+        <h1>Task #3-using-curry:</h1>
+        <h3>Extract function add(), and use currying to make (better) adder()</h3>
+        <h3>TODO RESPONSE</h3>
+    </div>
+
     <div id="map-articles" class="step slide">
         <h1>Function composition</h1>
         <h1>Task #compose-map:</h1>
@@ -231,6 +357,106 @@
     <div id="compose-articles-2" class="step slide">
         <h1>TODO</h1>
         <h3>Task #compose-compose:Response</h3>
+    </div>
+
+
+    <div id="before-decorator" class="step slide">
+        <h1>vs AOP</h1>
+        <h1>Decorator before:</h1>
+
+    <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+    // AKA ZF2
+    var stupid = {
+        remove: function () {
+            if (!this.isAdmin()) {
+                this.remove()
+            }
+            // destroy code
+            return this;
+        }
+        // 15x times this.isAdmin()
+    };
+    </textarea>
+    </div>
+
+    <div id="before-decorator-1" class="step slide">
+        <h1>vs AOP</h1>
+        <h1>Decorator before:</h1>
+
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        var before = curry(
+            function decorate(decoration, method) {
+                return function decoratedWithBefore() {
+                    decoration.apply(this, arguments);
+                    return method.apply(this, arguments);
+                };
+            }
+        );
+        </textarea>
+    </div>
+
+    <div id="before-decorator-2" class="step slide">
+        <h1>Let's use before decorator:</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var isAdminFirst = before(function () {
+                this.isAdmin();
+            });
+
+            var lessStupid = {
+                remove: isAdminFirst(function () {
+                    // destroy code
+                    return this;
+                })
+            };
+
+            var theLeastStupid = {
+                remove : isAdminFirst(fluent(function() {
+                    // destroy code
+                }))
+            };
+        </textarea>
+    </div>
+
+    <div id="decorator usages" class="step slide">
+        <h1>Common decorators usages</h1>
+        <ul>
+            <li>@logInput</li>
+            <li>@errorHandling</li>
+            <li>@measureExecutionTime</li>
+            <li>Make functions more single-responsibility (AKA SOLID)</li>
+        </ul>
+    </div>
+
+    <div id="curry-task-summary" class="step slide">
+        <h1>Task #curry-task-summary:</h1>
+        <textarea ng-model="incompleteTaskSummary.serverTasks" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="curry-task-summary-2" class="step slide">
+        <h1>Expected</h1>
+        <textarea ng-model="incompleteTaskSummary.expectedTaskSummary" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <div id="curry-task-summary-3" class="step slide">
+        <h1>Helper: fetchData()</h1>
+        <textarea ng-model="incompleteTaskSummary.fetchData" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        </textarea>
+    </div>
+
+    <!--TODO finish slides for task sumarry-->
+
+    <div id="bonus-round" class="step slide">
+        <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
+ getIncompleteTaskSummaries = (memberName) ->
+   fetchData()
+    .then R.get "tasks"
+    .then R.filter R.propEq "username", memberName
+    .then R.reject R.propEq "complete", true
+    .then R.map R.pick ["id", "dueDate", "title", "priority"]
+    .then R.sortBy R.get "dueDate"
+        </textarea>
     </div>
 
 </div>

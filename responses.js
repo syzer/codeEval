@@ -34,6 +34,40 @@ makeSandwich()
     .getFood();
 
 
+function fluent(methodBody) {
+    return function fluentized() {
+        methodBody.apply(this, arguments);   // apply this function
+        return this;
+    }
+}
+
+//#fluid-sandwich
+function makeFluentSandwich() {
+    var preparedFood = 'Here is a sandwich with: ';
+
+    return {
+        addLattice: fluent(function () {
+            // Lattice logic here
+            preparedFood += 'Lattice';
+        }),
+        addBacon: fluent(function () {
+            preparedFood += 'Bacon';
+        }),
+        addTomato: fluent(function () {
+            preparedFood += 'Tomato';
+        }),
+        getFood: function () {
+            return preparedFood;
+        }
+    }
+}
+makeFluentSandwich()
+    .addLattice()
+    .addBacon()
+    .addTomato()
+    .getFood();
+//=> Here is a sandwich with: LatticeBaconTomato
+
 // task#2
 function nextNum() {
     var count = 1;
@@ -51,7 +85,17 @@ var adder = function (x) {
     }
 };
 
+var add = function (a, b) {
+    return a + b;
+};
 console.log(adder(1)(2)); //=> 3
+
+//#3-using-curry
+var adder = _.curry(add);
+
+//console.log('\n------adder-----')
+adder(1)(2); //=>3
+
 
 // task#4 map warmup
 function addNameProp(el) {
@@ -81,6 +125,21 @@ var articles = [
     }
 ];
 
+//#flip
+function flip(fn) {
+    return function flipped(a, b) {
+        return fn.call(this, b, a);
+    }
+}
+function fromTo(a, b) {
+    return "from: " + a + " to: " + b;
+}
+
+//#flip-fromTo
+var returnTrip = flip(fromTo);
+fromTo('Basel', 'Zurich');             //=> from: Basel to: Zurich
+returnTrip('Basel', 'Zurich');          //=> from: Zurich to: Basel
+
 
 // #map-compose
 var firstTitle = function (iterable) {
@@ -108,12 +167,13 @@ var firstTitle = function (iterable) {
 //};
 //console.log('filter:', firstTitle(articles));
 
+//#compose-compose
 var rPluck = _.curry(function (x, xs) {
     return _.pluck(xs, x);
 });
 var getTitle = rPluck('title');
-var firstTitle2 = _.compose(_.first, getTitle);
-console.log(firstTitle2(articles));
+var firstTitle = _.compose(_.first, getTitle);
+console.log(firstTitle(articles));
 //=>Why OO Sucks by Joe Armstrong
 
 
@@ -130,13 +190,13 @@ console.log(firstTitle2(articles));
 var names = _.compose(rPluck('name'), rPluck('author'));
 console.log(names(articles));
 
-//var containsNames = _.contains(names(articles), 'Michael Fogus');
-//var containsNames = _.compose(_.contains, names);
-
 var containsNames = _.curry(function (x, xs) {
     return _.contains(names(x), xs);
 });
 console.log(containsNames(articles)('Michael Fogus'));
+
+
+//TODO functional curry.js get ramda and funtional
 
 
 //var isAuthor = _.curry(function (x, xs) {
@@ -145,24 +205,26 @@ console.log(containsNames(articles)('Michael Fogus'));
 //console.log(isAuthor(articles)('Michael Fogus'));
 
 
+console.log("--------AVG--------");
+
 // As you can see, the fork function is a
 // pipeline like compose, except it duplicates
 // its value, sends it to two functions, then
 // sends the results to a combining function.
 //
 var sum = function (a, b) {
-    console.log(a,b);
+    console.log('sum:', a, b);
     return a + b;
 };
 
 var cSum = _.curry(sum);
 var divide = function (a, b) {
-    console.log(a,b);
+    console.log('divide:', a, b);
     return a / b;
 };
 var cDivide = _.curry(divide);
 
-_.mixin({sum: cSum, divide: cDivide});
+_.mixin({sum: cSum, divide: divide});
 
 var fork = _.curry(function (lastly, f, g, x) {
     return lastly(f(x), g(x));
@@ -171,4 +233,44 @@ var avg = fork(_.divide, _.sum, _.size); //TODO size sum divide
 //var avg = undefined; // change this
 //assertEqual(3, avg([1,2,3,4,5]));
 console.log(avg([1, 2, 3, 4, 5]));
-console.log("--------Exercise 4 pass!--------");
+
+console.log('size:', _.size([1, 2, 3, 4]));
+
+console.log("--------AVG PASS--------");
+
+
+var before = curry(
+    function decorate(decoration, method) {
+        return function decoratedWithBefore() {
+            decoration.apply(this, arguments);
+            return method.apply(this, arguments);
+        };
+    }
+);
+// AKA ZF2
+var stupid = {
+    remove: function () {
+        if (!this.isAdmin()) {
+            this.remove()
+        }
+        // destroy code
+        return this;
+    }
+};
+
+var isAdminFirst = before(function () {
+    this.isAdmin();
+});
+
+var lessStupid = {
+    remove: isAdminFirst(function () {
+        // destroy code
+        return this;
+    })
+};
+
+var evenLessStupid = {
+    remove : isAdminFirst(fluent(function() {
+        // destroy code
+    }))
+};

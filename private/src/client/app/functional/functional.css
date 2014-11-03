@@ -1,6 +1,13 @@
 .CodeMirror {
     /*height: 200px;*/
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     height: 80%!important;
     font-size: 22px!important;
+}
+li {
+    margin-top: 50px!important;
+}
+h1 {
+    margin-bottom: 20px!important;
+    margin-top: 20px!important;
 }

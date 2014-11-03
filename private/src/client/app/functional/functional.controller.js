@@ -10,6 +10,8 @@ angular.module('jsSparkUiApp')
         $scope.task1 = tasks.task1;
         $scope.task2 = tasks.task2;
         $scope.articles = tasks.articles;
+        $scope.incompleteTaskSummary = tasks.incompleteTaskSummary;
 
+        $scope.coffee = tasks.coffee
     });
 
