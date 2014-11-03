@@ -95,7 +95,7 @@
 
     <div id="slide3" class="big-font step slide">
         <h1>JS 101:</h1>
-        <h3>Task #1: Fluid API</h3>
+        <h3>Task #1: Fluent API</h3>
         <h3>{{task1.caption}}</h3>
         <form>
             <textarea ui-codemirror ng-model='task1.code' ui-codemirror-opts='{{task1.opts}}'>
@@ -104,14 +104,37 @@
     </div>
 
     <div id="slide3-1" class="big-font step slide">
-        <h1>Fluid API</h1>
+        <h1>Fluent API</h1>
         <textarea ui-codemirror ng-model='task1.expected' ui-codemirror-opts='{{task1.opts}}'>
         </textarea>
     </div>
 
     <div id="slide4" class="step slide">
-        <h1>TODO</h1>
         <h3>Task #1:Response</h3>
+        <textarea ui-codemirror ui-codemirror-opts='{{task1.opts}}'>
+    function makeSandwich() {
+        var preparedFood = 'Here is a sandwich with: ';
+
+        return {
+                addLattice: function () {
+                    // Lattice logic here
+                    preparedFood += 'Lattice';
+                    return this;
+                },
+                addBacon: function () {
+                    preparedFood += 'Bacon';
+                    return this;
+                },
+                addTomato: function () {
+                    preparedFood += 'Tomato';
+                    return this;
+                },
+                getFood: function () {
+                    return preparedFood;
+                }
+            }
+    }
+        </textarea>
     </div>
 
     <div id="fluid-sandwich" class="big-font step slide">
@@ -127,9 +150,29 @@
         </textarea>
     </div>
 
-    <div id="fluid-sandwich-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #fluid-sandwich:Response</h3>
+    <div id="fluent-sandwich-2" class="step slide">
+        <h3>Task #fluent-sandwich:Response</h3>
+<textarea ui-codemirror ui-codemirror-opts='{{task1.opts}}'>
+    function makeFluentSandwich() {
+        var preparedFood = 'Here is a sandwich with: ';
+
+        return {
+            addLattice: fluent(function () {
+                // Lattice logic here
+                preparedFood += 'Lattice';
+            }),
+            addBacon: fluent(function () {
+                preparedFood += 'Bacon';
+            }),
+            addTomato: fluent(function () {
+                preparedFood += 'Tomato';
+            }),
+            getFood: function () {
+                return preparedFood;
+            }
+        }
+    }
+</textarea>
     </div>
 
     <div id="vs-oop" class="step slide">
@@ -189,14 +232,20 @@
     </div>
 
     <div id="slide6-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #2:Response</h3>
+        <h1>Task #2:Response</h1>
+<textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+ function nextNum() {
+    var count = 1;
+    nextNum = function () {
+        return ++count;
+    };
+    return count;
+}
+</textarea>
     </div>
 
-
     <div id="curry" class="step slide">
-        <h1>Task #3:</h1>
-        <h3>Make function adder:</h3>
+        <h1>Make function adder:</h1>
         <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
             adder(1)(2); //=> 3
             adder(2)(2); //=> 4
@@ -204,12 +253,18 @@
     </div>
 
     <div id="curry-2" class="step slide">
-        <h1>TODO</h1>
         <h1>Currying()</h1>
-        <h3><a href="http://en.wikipedia.org/wiki/Haskell_Curry" target="blank">
+        <h1><a href="http://en.wikipedia.org/wiki/Haskell_Curry" target="blank">
             Haskell Curry</a>
-        </h3>
-        <h3>Task #3:Response</h3>
+        </h1>
+        <h1>Task #3:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+           var adder = function (x) {
+                return function (y) {
+                    return x + y;
+                }
+           };
+        </textarea>
     </div>
 
 
@@ -235,8 +290,21 @@
     </div>
 
     <div id="map-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #4:Response</h3>
+        <h1>Task #4:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+
+            function addNameProp(el) {
+                return {name: el}
+            }
+
+
+            var isTheArea2 = [
+                'Urban',
+                'Peri-urban',
+                'Rural',
+                'NS'
+            ].map(addNameProp);
+        </textarea>
     </div>
 
 
@@ -262,7 +330,7 @@
 
     <div id="flip-task" class="step slide">
         <h1>Task #flip-fromTo: make returnTrip()</h1>
-        <textarea class="test" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
             //=> from: Basel to: Zurich
             fromTo('Basel', 'Zurich');
 
@@ -272,8 +340,16 @@
     </div>
 
     <div id="flip-response" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #flip-fromTo:Response</h3>
+        <h1>Task #flip-fromTo:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var returnTrip = flip(fromTo);
+
+            //=> from: Basel to: Zurich
+            fromTo('Basel', 'Zurich');
+
+            //=> from: Zurich to: Basel
+            returnTrip('Basel', 'Zurich');
+        </textarea>
     </div>
 
     <div id="curry-combinator" class="step slide">
@@ -294,15 +370,26 @@
     </div>
 
     <div id="curry-combinator-adder" class="step slide">
-        <h1>Task #3-using-curry:</h1>
-        <h3>Extract function add(), and use currying to make (better) adder()</h3>
-        <h3>TODO RESPONSE</h3>
+        <h1>Task #3-using-curry</h1>
+        <h3>From task #3: Extract function add(), and use currying to make (better) adder()</h3>
+    </div>
+
+    <div id="curry-combinator-adder-2" class="step slide">
+        <h1>Task #3-using-curry:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var add = function (a, b) {
+                return a + b;
+            };
+            var adder = _.curry(add);
+            adder(1, 2); //=>3
+            adder(1)(2); //=>3
+        </textarea>
     </div>
 
     <div id="map-articles" class="step slide">
-        <h1>Function composition</h1>
         <h1>Task #compose-map:</h1>
         <h3>Return <b>firstTitle()</b> using map</h3>
+        <h1>https://gist.github.com/syzer/e7a69e8a31205766a7c0</h1>
         <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
             var articles = [
             {
@@ -326,8 +413,14 @@
     </div>
 
     <div id="map-articles-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #compose-map:Response</h3>
+        <h1>Task #compose-map:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        var firstTitle = function (iterable) {
+            return iterable.map(function (el) {
+                return el.title;
+            })[0]
+        };
+        </textarea>
     </div>
 
     <div id="reduce-articles" class="step slide">
@@ -339,8 +432,15 @@
     </div>
 
     <div id="reduce-articles-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #compose-reduce:Response</h3>
+        <h1>Task #compose-reduce:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        var firstTitle = function (iterable) {
+            return iterable.reduce(function (acc, el, i) {
+                0 === i ? acc = el.title : null;
+                return acc;
+            }, '')
+        };
+        </textarea>
     </div>
 
     <div id="compose-articles" class="step slide">
@@ -351,8 +451,19 @@
     </div>
 
     <div id="compose-articles-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #compose-compose:Response</h3>
+        <h1>Task #compose-compose:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+
+            var rPluck = _.curry(function (x, xs) {
+                return _.pluck(xs, x);
+            });
+            var getTitle = rPluck('title');
+
+            var firstTitle = _.compose(_.first, getTitle);
+
+            //=>Why OO Sucks by Joe Armstrong
+            firstTitle(articles);
+        </textarea>
     </div>
 
     <div id="articles-is-author" class="step slide">
@@ -365,8 +476,20 @@
     </div>
 
     <div id="articles-is-author-2" class="step slide">
-        <h1>TODO</h1>
-        <h3>Task #articles-is-author:Response</h3>
+        <h1>Task #articles-is-author:Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+var authorsNames = _.compose(rPluck('name'), rPluck('author'));
+
+//=>[ 'Joe Armstrong', 'Michael Fogus', 'Reginald Braithwaite' ]
+authorsNames(articles);
+
+var isAuthor = _.curry(function (x, xs) {
+    return _.contains(authorsNames(x), xs);
+});
+
+isAuthor(articles)('Michael Fogus');   //=> true
+isAuthor(articles)('Lukas');           //=> false
+        </textarea>
     </div>
 
     <div id="before-decorator" class="step slide">
@@ -438,8 +561,22 @@
 
     <div id="after-decorator" class="step slide">
         <h1>Task #after-decorator</h1>
-        <h3>Make after decorator</h3>
-        <h3>TODO </h3>
+        <h3>Make after() decorator, that runs a function after other function</h3>
+    </div>
+
+    <div id="after-decorator-2" class="step slide">
+        <h1>Task #after-decorator: Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+var after = curry(
+    function decorate(decoration, method) {
+       return function decoratedWithAfter() {
+           var returnValue = method.apply(this, arguments);
+           decoration.apply(this, arguments);
+           return returnValue;
+       };
+    }
+);
+        </textarea>
     </div>
 
     <div id="after-decorator-with-log" class="step slide">
@@ -453,14 +590,18 @@
     </div>
 
     <div id="after-decorator-with-log-2" class="step slide">
-        <h3>Task #after-decorator-with-logging: Response</h3>
-        <h3>TODO Response </h3>
-        <textarea ng-model="tasks.afterDecoratorWithLogging" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        <h1>Task #after-decorator-with-logging: Response</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+            var doubleWithLog = after(console.log, double);
+
+            //=>4 (console log first arguments)
+            console.log(doubleWithLog(2));
         </textarea>
     </div>
 
     <div id="curry-task-summary" class="step slide">
         <h1>Task #curry-task-summary:</h1>
+        <h1>https://gist.github.com/syzer/0abe91822a0b8e1ec750</h1>
         <textarea ng-model="incompleteTaskSummary.serverTasks" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
         </textarea>
     </div>
@@ -478,14 +619,18 @@
     </div>
 
     <div id="curry-task-summary-4" class="step slide">
-        <h1>Task #curry-task-summary:</h1>
-        <h3>TODO RESPONSE</h3>
+        <h1>Task #curry-task-summary: Response</h1>
         <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+    var rPluck = _.curry(function (x, xs) {
+        return _.pluck(xs, x);
+    });
+    var getTitle = rPluck('title');
+    var firstTitle = _.compose(_.first, getTitle);
+
+    //=>Why OO Sucks by Joe Armstrong
+    firstTitle(articles);
         </textarea>
     </div>
-
-    <!--TODO finish slides for task sumarry-->
-
 
     <div id="bonus-round-0" class="step slide">
         <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}' style="height: 1400px!important;">

@@ -41,7 +41,7 @@ function fluent(methodBody) {
     }
 }
 
-//#fluid-sandwich
+//#fluent-sandwich
 function makeFluentSandwich() {
     var preparedFood = 'Here is a sandwich with: ';
 
@@ -147,10 +147,9 @@ var articles = [
             email: 'reg@braythwayt.com'
         }
     }
-
 ];
 
-// #map-compose
+// #compose-map
 var firstTitle = function (iterable) {
     return iterable.map(function (el) {
         return el.title;
@@ -182,8 +181,10 @@ var rPluck = _.curry(function (x, xs) {
 });
 var getTitle = rPluck('title');
 var firstTitle = _.compose(_.first, getTitle);
-console.log(firstTitle(articles));
+
 //=>Why OO Sucks by Joe Armstrong
+firstTitle(articles);
+
 
 
 // -- Challenge 2 -------------------------
