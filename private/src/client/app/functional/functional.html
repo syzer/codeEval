@@ -600,7 +600,7 @@ var after = curry(
     </div>
 
     <div id="curry-task-summary" class="step slide">
-        <h1>Task #curry-task-summary:</h1>
+        <h1>Task #curry-task-summary</h1>
         <h1>https://gist.github.com/syzer/0abe91822a0b8e1ec750</h1>
         <textarea ng-model="incompleteTaskSummary.serverTasks" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
         </textarea>
@@ -621,16 +621,51 @@ var after = curry(
     <div id="curry-task-summary-4" class="step slide">
         <h1>Task #curry-task-summary: Response</h1>
         <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
-    var rPluck = _.curry(function (x, xs) {
-        return _.pluck(xs, x);
-    });
-    var getTitle = rPluck('title');
-    var firstTitle = _.compose(_.first, getTitle);
-
-    //=>Why OO Sucks by Joe Armstrong
-    firstTitle(articles);
+var getIncompleteTaskSummaries = function (memberName) {
+    return fetchData()
+        .then(function (data) {
+            return data.tasks;
+        })
+        .then(function (tasks) {
+            var results = [];
+            for (var i = 0, len = tasks.length; i < len; i++) {
+                if (tasks[i].username == memberName) {
+                    results.push(tasks[i]);
+                }
+            }
+            return results;
+        })
+        .then(function (tasks) {
+            var results = [];
+            for (var i = 0, len = tasks.length; i < len; i++) {
+                if (!tasks[i].complete) {
+                    results.push(tasks[i]);
+                }
+            }
+            return results;
+        })
+        .then(function (tasks) {
+            return tasks.map(function (task) {
+                return {
+                    id: task.id,
+                    priority: task.priority,
+                    dueDate: task.dueDate,
+                    title: task.title
+                }
+            });
+        })
+        .then(function (tasks) {
+            tasks.sort(function (first, second) {
+                var a = first.dueDate, b = second.dueDate;
+                return a < b ? -1 : a > b ? 1 : 0;
+            });
+            return tasks;
+        });
+};
         </textarea>
     </div>
+
+
 
     <div id="bonus-round-0" class="step slide">
         <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}' style="height: 1400px!important;">
