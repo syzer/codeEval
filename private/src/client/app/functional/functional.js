@@ -17,9 +17,19 @@ angular.module('jsSparkUiApp')
         };
     })
     //TODO
-    .factory('add2Tabs', function () {
+    .factory('tab', function() {
+        return function () {
+            return '    ';
+        }
+    })
+    .factory('addTab', function(tab){
         return function (el) {
-            return '        ' + el;
+            return tab() + el;
+        }
+    })
+    .factory('add2Tabs', function (_, tab) {
+        return function (el) {
+            return _.times(2, tab).join('') + el;
         }
     })
     .factory('editorOptions', function () {
@@ -31,7 +41,7 @@ angular.module('jsSparkUiApp')
             matchBrackets: true
         }
     })
-    .factory('intro', function (_, editorOptions, add2Tabs) {
+    .factory('intro', function (_, editorOptions, addTab, add2Tabs) {
         var jsOptions = editorOptions;
 
         var sqlOptions = _.clone(jsOptions);
@@ -79,7 +89,7 @@ angular.module('jsSparkUiApp')
             "",
             "print reverse [apples and pears]",
             "pears and apples"
-        ].map(add2Tabs).join('\n');
+        ].map(addTab).join('\n');
 
         return {
             js: {
@@ -197,7 +207,7 @@ angular.module('jsSparkUiApp')
         };
         serverTasks = JSON.stringify(serverTasks, null, 2);
 
-        var fetchData = function () {
+        var fetchData = function fetchData() {
             var deffered = Q.defer();
             setTimeout(function () {
                 deffered.resolve(data);

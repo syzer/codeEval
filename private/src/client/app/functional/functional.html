@@ -7,9 +7,7 @@
     <div id="slide1" class="step slide" >
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h1 class="panel-title">Lets start from short history of JS:</h1>
-
-                <h2 class="panel-title">(Fun facts about JavaScript)</h2>
+                <h5 class="panel-title">Lets start from short history of JS:</h5>
             </div>
         </div>
         <ul class="list-group">
@@ -21,8 +19,15 @@
             <li class="list-group-item lead"> Functions as first-class citizens</li>
         </ul>
     </div>
-    <!--todo big-font css-->
-    <!--class="code-tab"-->
+
+    <div id="slide1-2" class="big-font step slide">
+        <h1>Reference transparency</h1>
+        <h1>Function as first class citizen</h1>
+        <textarea ui-codemirror ui-codemirror-opts='{{js.opts}}'>
+            var print = console.log;
+        </textarea>
+    </div>
+
     <div id="slide2" class="big-font step slide">
         <h1>You have done Functional Programming when you did any of this:</h1>
         <h3>{{js.caption}}</h3>
@@ -44,14 +49,6 @@
         <textarea ui-codemirror ng-model='logo.code' ui-codemirror-opts='{{logo.opts}}'>
         </textarea>
     </div>
-    <div id="slide2-5" class="big-font step slide">
-        <h1>Reference transparency</h1>
-        <h1>Function as first class citizen</h1>
-        <textarea ui-codemirror ui-codemirror-opts='{{js.opts}}'>
-            var print = console.log;
-        </textarea>
-    </div>
-
 
     <div id="imperative-functional" class="big-font step slide">
         <h3>Imperative style vs Functional</h3>
@@ -446,7 +443,7 @@
     </div>
 
     <div id="after-decorator-with-log" class="step slide">
-        <h1>Decorate function double with login and make doubleWithLog()</h1>
+        <h1>Decorate function double() with login and make doubleWithLog()</h1>
         <h3>Task #after-decorator-with-logging</h3>
         <textarea ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
             var double = function (n) {
@@ -456,10 +453,9 @@
     </div>
 
     <div id="after-decorator-with-log-2" class="step slide">
-        <h1>Decorate function double with login and make doubleWithLog()</h1>
-        <h3>Task #after-decorator-with-logging</h3>
+        <h3>Task #after-decorator-with-logging: Response</h3>
         <h3>TODO Response </h3>
-        <textarea ng-model="tasks.after-decorator-with-logging" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
+        <textarea ng-model="tasks.afterDecoratorWithLogging" ui-codemirror ui-codemirror-opts='{{task2.opts}}'>
         </textarea>
     </div>
 
@@ -492,46 +488,46 @@
 
 
     <div id="bonus-round-0" class="step slide">
-        <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
-        var getIncompleteTaskSummaries = function(memberName) {
-            return fetchData()
-                .then(function(data) {
-                    return R.get('tasks', data)
-                })
-                .then(function(tasks) {
-                    return R.filter(function(task) {
-                        return R.propEq('username', memberName, task)
-                    }, tasks)
-                })
-                .then(function(tasks) {
-                    return R.reject(function(task) {
-                        return R.propEq('complete', true, task);
-                    }, tasks)
-                })
-                .then(function(tasks) {
-                    return R.map(function(task) {
-                        return R.pick(['id', 'dueDate', 'title', 'priority'], task);
-                    }, tasks);
-                })
-                .then(function(abbreviatedTasks) {
-                    return R.sortBy(function(abbrTask) {
-                        return R.get('dueDate', abbrTask);
-                    }, abbreviatedTasks);
-                });
-        };
+        <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}' style="height: 1400px!important;">
+var getIncompleteTaskSummaries = function(memberName) {
+    return fetchData()
+        .then(function(data) {
+            return R.get('tasks', data)
+        })
+        .then(function(tasks) {
+            return R.filter(function(task) {
+                return R.propEq('username', memberName, task)
+            }, tasks)
+        })
+        .then(function(tasks) {
+            return R.reject(function(task) {
+                return R.propEq('complete', true, task);
+            }, tasks)
+        })
+        .then(function(tasks) {
+            return R.map(function(task) {
+                return R.pick(['id', 'dueDate', 'title', 'priority'], task);
+            }, tasks);
+        })
+        .then(function(abbreviatedTasks) {
+            return R.sortBy(function(abbrTask) {
+                return R.get('dueDate', abbrTask);
+            }, abbreviatedTasks);
+        });
+    };
         </textarea>
     </div>
 
     <div id="bonus-round-1" class="step slide">
         <textarea ui-codemirror ui-codemirror-opts='{{coffee.opts}}'>
-        var getIncompleteTaskSummaries = function (memberName) {
-            return fetchData()
-                .then(R.get('tasks'))
-                .then(R.filter(R.propEq('username', memberName)))
-                .then(R.reject(R.propEq('complete', true)))
-                .then(R.map(R.pick(['id', 'dueDate', 'title', 'priority'])))
-                .then(R.sortBy(R.get('dueDate')));
-        };
+var getIncompleteTaskSummaries = function (memberName) {
+    return fetchData()
+        .then(R.get('tasks'))
+        .then(R.filter(R.propEq('username', memberName)))
+        .then(R.reject(R.propEq('complete', true)))
+        .then(R.map(R.pick(['id', 'dueDate', 'title', 'priority'])))
+        .then(R.sortBy(R.get('dueDate')));
+};
         </textarea>
     </div>
 

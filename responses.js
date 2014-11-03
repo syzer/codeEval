@@ -138,7 +138,16 @@ var articles = [
             name: 'Michael Fogus',
             email: 'empty2@email.com'
         }
+    },
+    {
+        title: 'JavaScript Allongé',
+        url: 'https://leanpub.com/javascript-allonge',
+        author: {
+            name: 'Reginald Braithwaite',
+            email: 'reg@braythwayt.com'
+        }
     }
+
 ];
 
 // #map-compose
@@ -183,54 +192,49 @@ console.log(firstTitle(articles));
 
 
 var authorsNames = _.compose(rPluck('name'), rPluck('author'));
-console.log(authorsNames(articles));
+authorsNames(articles);    //=>[ 'Joe Armstrong', 'Michael Fogus', 'Reginald Braithwaite' ]
 
+//#articles-is-author
 var isAuthor = _.curry(function (x, xs) {
     return _.contains(authorsNames(x), xs);
 });
 
-console.log(isAuthor(articles)('Michael Fogus'));   //=> true
-console.log(isAuthor(articles)('Lukas'));           //=> false
+isAuthor(articles)('Michael Fogus');   //=> true
+isAuthor(articles)('Lukas');           //=> false
 
 
-//var isAuthor = _.curry(function (x, xs) {
-//    return _.compose(_.contains(x), names)(xs);
+//console.log("--------AVG--------");
+//// TODO AVG not working!!
+//// As you can see, the fork function is a
+//// pipeline like compose, except it duplicates
+//// its value, sends it to two functions, then
+//// sends the results to a combining function.
+////
+//var sum = function (a, b) {
+//    console.log('sum:', a, b);
+//    return a + b;
+//};
+//
+//var cSum = _.curry(sum);
+//var divide = function (a, b) {
+//    console.log('divide:', a, b);
+//    return a / b;
+//};
+//var cDivide = _.curry(divide);
+//
+//_.mixin({sum: cSum, divide: divide});
+//
+//var fork = _.curry(function (lastly, f, g, x) {
+//    return lastly(f(x), g(x));
 //});
-//console.log(isAuthor(articles)('Michael Fogus'));
-
-
-console.log("--------AVG--------");
-// TODO AVG not working!!
-// As you can see, the fork function is a
-// pipeline like compose, except it duplicates
-// its value, sends it to two functions, then
-// sends the results to a combining function.
+//var avg = fork(_.divide, _.sum, _.size); //TODO size sum divide
+////var avg = undefined; // change this
+////assertEqual(3, avg([1,2,3,4,5]));
+////console.log(avg([1, 2, 3, 4, 5]));
+////
+////console.log('size:', _.size([1, 2, 3, 4]));
 //
-var sum = function (a, b) {
-    console.log('sum:', a, b);
-    return a + b;
-};
-
-var cSum = _.curry(sum);
-var divide = function (a, b) {
-    console.log('divide:', a, b);
-    return a / b;
-};
-var cDivide = _.curry(divide);
-
-_.mixin({sum: cSum, divide: divide});
-
-var fork = _.curry(function (lastly, f, g, x) {
-    return lastly(f(x), g(x));
-});
-var avg = fork(_.divide, _.sum, _.size); //TODO size sum divide
-//var avg = undefined; // change this
-//assertEqual(3, avg([1,2,3,4,5]));
-//console.log(avg([1, 2, 3, 4, 5]));
-//
-//console.log('size:', _.size([1, 2, 3, 4]));
-
-console.log("--------AVG PASS--------");
+//console.log("--------AVG PASS--------");
 
 
 var before = curry(
@@ -292,7 +296,6 @@ var after = curry(
         };
     }
 );
-
 
 var double = function (n) {
     return n * 2;
