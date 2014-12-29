@@ -60,7 +60,85 @@ console.log(makeSandwich(true, false).getFood());
 //Here is a sandwich with: Bacon,,Tomato
 //Here is a sandwich with: Bacon,,
 
+//new talk
+////////////////
+// 1.queryParasiteSpecies: parasiteSpeciesService.query
+//everyone?
+//2. refactor query*Meethods to queryAndFilterDiseases()
+/**
+ * Created by syzer on 12/11/2014.
+ */
+angular.module('anemiaTphApp')
+    .factory('parasiteService', function (lib, _, $resource, navbarItems, diseaseService, surveyService, parasiteSpeciesService, stoolMethodService, urineMethodService, bloodMethodService, skinTissueMethodService) {
+        'use strict';
 
+        var Resource = $resource('/api/parasites/:id');
+        var current;
 
+        return {
+
+            queryByPointId: function (id) {
+                return Resource.query({PointID: id}).$promise;
+            },
+
+            // a very db specific code
+            newEntity: function (entity, parasite) {
+                entity.PointID = parasite.PointID;
+                entity.SurveyID = parasite.SurveyID;
+
+                return entity;
+            },
+
+            save: function (item) {
+                return Resource.save(item).$promise;
+            },
+
+            queryParasiteSpecies: parasiteSpeciesService.query,
+            queryStoolMethods: function (query) {
+                return stoolMethodService.query(query).then(filterDisease);
+            },
+            queryUrineMethods: function (query) {
+                return urineMethodService.query(query).then(filterDisease);
+            },
+            queryBloodMethods: function (query) {
+                return bloodMethodService.query(query).then(filterDisease);
+            },
+            querySkinTissueMethods: function (query) {
+                return skinTissueMethodService.query(query).then(filterDisease);
+            },
+
+            get: function () {
+                return current;
+            },
+            set: function (parasite) {
+                current = parasite;
+            }
+        };
+
+        function queryAndFilterDiseases(){}
+
+        function filterDisease(stoolMethods) {
+            return diseaseService
+                .queryByCurrentSurvey()
+                .then(function (disease) {
+                    navbarItems.setDisease(disease);
+                    return stoolMethods.filter(function(method){
+                        return method.dis_cod === disease.dis_cod;
+                    });
+                });
+        }
+
+    })
+    .factory('parasiteSpeciesService', function (lib, _, $resource) {
+        'use strict';
+
+        var Resource = $resource('/api/parasite-species/:id');
+        var mapper = lib.map.newMapper({key: 'id', name: 'Parasite_species'});
+
+        return {
+
+            query: lib.resource.newQuery(Resource, mapper)
+        };
+    });
 
 
