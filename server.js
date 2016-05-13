@@ -1,6 +1,8 @@
 /**
  * Created by syzer on 7/24/2014.
  * Its just a Proof of Concept
+ * Shows of usage of functional concepts AKA lambdas
+ * to do distributed computation
  */
 'use strict'
 
