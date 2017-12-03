@@ -1,2 +1,2 @@
-#!/bin/sh
-mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"
+#!/usr/bin/env bash
+mongod --dbpath=data --nojournal --rest "$@"
